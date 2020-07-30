@@ -7,19 +7,6 @@ class CardProduto extends React.Component {
 	constructor(props){
 		super(props);
 
-		this.state = {
-			qtd: '0'
-		}
-	}
-
-	handleClick(e) {
-		e.preventDefault();
-		console.log(this.state.qtd)
-		const value = this.state.qtd + 1
-		this.setState({
-			qtd: {value}
-		});
-		console.log(this.state.qtd)
 	}
 
 	render () {
@@ -36,8 +23,10 @@ class CardProduto extends React.Component {
 
 					<br />
 					
-					<button type="button" class="btn btn-info" onClick={this.handleClick}>Adicionar ao carrinho</button>  
-
+					<label>Colocar no carrinho</label> 
+					<button type="button" class="btn btn-info" onClick={this.props.adicionarCarrinho} >+</button>  
+					<label>Qtd: {this.props.carrinho[0].qtd /*ARRUMAR INDICE DO CARRINHO*/} </label> 
+					<button type="button" class="btn btn-info" onClick={this.props.diminuirCarrinho} >-</button>
 				</div>
 			
 			</div>
@@ -49,8 +38,8 @@ class CardProduto extends React.Component {
 
 function Lista(props) { 
 
-	const listaProd = props.vetor.map((vetor) =>
-		<CardProduto key={vetor.id.toString()} name={vetor.name} price={vetor.price} image={vetor.image}/>
+	const listaProd = props.produtos.map((produtos) =>
+		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} carrinho={props.user.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
 	);
 
 	return (
@@ -65,8 +54,7 @@ class TelaProdutos extends React.Component {
 
 		this.state = {
 			carregando: true,
-			vetor: null,
-			tam2: 0,
+			produtos: null,
 			page: "here"
 		};
 
@@ -85,7 +73,7 @@ class TelaProdutos extends React.Component {
 		const data = await response.json();
 		this.setState({
 			carregando: false, 
-			vetor: data, // resgata o vetor com todos os produtos do json, para acessá-los deve-se usar as "props" id, createdAt, name, price, image, stock
+			produtos: data, // resgata o produtos com todos os produtos do json, para acessá-los deve-se usar as "props" id, createdAt, name, price, image, stock
 			tam2: data.length //desnecessário - apagar
 		}) 
 	}
@@ -98,16 +86,16 @@ class TelaProdutos extends React.Component {
 		else {
 			return (
 				<div>
-					<p> Bem-vinda {this.props.users2[0].nome}</p>
+					<p> Bem-vinda {this.props.users[0].nome}</p>
 					<button type="button" class="btn btn-info" onClick={this.chamaCarrinho}> Ver carrinho de compras </button>
 					<h2> Produtinhos</h2>
-					{this.state.carregando || !this.state.vetor ? (
+					{this.state.carregando || !this.state.produtos ? (
 						<div>carregando...</div> 
 					) : ( 
 						
 						<div>
 							
-							<Lista vetor={this.state.vetor} />
+							<Lista produtos={this.state.produtos} user={this.props.users[0]} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
 
 						</div>
 				)}

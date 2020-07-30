@@ -9,8 +9,7 @@ class TelaPedido extends React.Component {
 			<div> 
 				<h1>Resumo do pedido</h1> 
 
-				<button type="button" class="btn btn-info" onClick={} >+</button>  
-				<button type="button" class="btn btn-info" onClick={} >-</button>
+				
 
 				<button type="button" class="btn btn-info" onClick={this.chamaFinaliza}> Finalizar compra! </button>
 			</div>

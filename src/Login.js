@@ -9,22 +9,31 @@ class Login extends React.Component { //Tela de login
 		super(props)
 		this.state = {
 			page: "here", // página que deve ser renderizada
-			email: "",
-			senha: ""
+			//email: "",
+			//senha: ""
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	handleClick = () => {
-		for (var i = 0 ; i < this.props.users2.length; i++) {
-			if (this.props.users2[i].email === this.state.email && this.props.users2[i].senha === this.state.senha){
+	handleClick = (props) => {
+		//console.log({users.length})
+
+		for (var i = 0 ; i < this.props.users.length; i++) {
+			console.log({i})
+			
+			if (this.props.users[i].email === this.state.email && this.props.users[i].senha === this.state.senha){
 				this.setState({
 					page: "vai_produtos" // indica a tela de produtos como página que deve ser renderizada
+				
+				}, function () {
+				//	console.log(this.state.page)
 				});
+				console.log("mudou")
 			}
 		}
-		if (this.state.page === "here") {
+		if (this.state.page === "here") { 
 			alert("Usuário não reconhecido - email ou senha inválidos");
+			//console.log({this.state.page})
 		}
 		
 	}
@@ -67,14 +76,14 @@ class Login extends React.Component { //Tela de login
 					<div>
 						<h1>Faça seu login</h1>
 
-						<div class="form-group" style={{width: "20rem"}}>
+						<div class="form-group" style={{width: "20rem"}}> 
 
 							<label name="Email" id="ExampEmail" adb="EmailHelp">Email</label>
 							<input name="email" type="email" class="form-control" id="ExampleEmail" valueE={this.state.email} onChange={this.handleChange}/>
 							<label name="Password" id="ExampPassword" adb="PasswordHelp">Password</label>
 						 	<input name="password" type="password" class="form-control" id="ExamplePassword" valueP={this.state.senha} onchange={this.handleChange}/>
 							<br/>
-							<button type="button" class="btn btn-info" onClick={this.handleClick}>Pronto!</button>
+							<button type="button" class="btn btn-info" onClick={this.handleClick.bind(this,this.props.users)}>Pronto!</button>
 						</div>
 					</div>
 				);
