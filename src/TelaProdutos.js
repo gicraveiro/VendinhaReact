@@ -28,11 +28,11 @@ class CardProduto extends React.Component {
 					<br />
 					
 					<label>Colocar no carrinho</label> 
-					<button type="button" class="btn btn-info" idP={this.props.id} user={this.props.user}  onClick={this.props.adicionarCarrinho/*.bind(this,[this.props.user, index, qtd,this.props.id])*/} >+</button>  
+					<button type="button" class="btn btn-info" idP={this.props.id} user={this.props.user}  onClick={/*(idP, preco, name) => */() => this.props.adicionarCarrinho(this.props.id, this.props.price, this.props.name)/*this.props.adicionarCarrinho*//*.bind(this,[this.props.user, index, qtd,this.props.id])*/} >+</button>  
 		
 				 	<label>  Qtd: {qtd}  </label> 			
 				
-					<button type="button" class="btn btn-info" idP={this.props.id} onClick={this.props.diminuirCarrinho} >-</button>
+					<button type="button" class="btn btn-info" idP={this.props.id} onClick={() => this.props.diminuirCarrinho(this.props.id, this.props.price, this.props.name)} >-</button>
 				</div>
 			
 			</div>
@@ -46,7 +46,7 @@ function Lista(props) {
 
 
 	const listaProd = props.produtos.map((produtos) =>
-		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.user.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
+		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.carrinho} /*carrinho={props.user.carrinhoP}*/adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
 	);
 
 	return (
@@ -101,7 +101,7 @@ class TelaProdutos extends React.Component {
 						
 						<div>
 							
-							<Lista produtos={this.state.produtos} user={this.props.user} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
+							<Lista produtos={this.state.produtos} /*user={this.props.user}*/ carrinho={this.props.carrinho} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
 
 						</div>
 				)}
