@@ -34,10 +34,23 @@ class Index extends React.Component {
 //				{"email" : "gabriel@gmail.com", "senha" : "abracadabra", "cpf": "234", "nome" : "Gabriel"},
 //				{"email" : "araceli@gmail.com", "senha" : "senhadificil", "cpf" : "3432", "nome" : "Araceli"}
 			], // talvez trocar aspas duplas por aspas simples
-			
+			page: "here"
 		};
 		this.adicionarCarrinho = this.adicionarCarrinho.bind(this);
 		this.diminuirCarrinho = this.diminuirCarrinho.bind(this);
+	}
+
+	addCadastro(props){
+
+		const updatedUsers = this.state.users
+
+		updatedUsers.push({"email" : props.email, "senha" : props.senha, "cpf" : props.cpf, "nome" : props.nome, "carrinho": []})
+
+		this.setState({
+			page: "vai_produtos",
+			...this.state.users = updatedUsers
+
+		});
 	}
 
 	addItem(props, e) {
@@ -133,7 +146,7 @@ class Index extends React.Component {
 				<Route 
 					path="/cadastro" 
 					component={() => <TelaCadastro
-						users={this.state.users}
+						addCadastro={this.state.addCadastro}
 					/> }
 				/>
 

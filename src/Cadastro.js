@@ -21,39 +21,29 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 		this.setState({
 			page: "vai_produtos"
 		});
+
 	}
 
 	handleChange(event) { // ativa mudança no estado do input (mostra e guarda cada novo caracter digitado no input)
-//		const value = target.name === 'nome' ? target.valuename : target.valuepassword;
 
 		this.setState({
 			[event.target.name]: event.target.value
-			//value: event.target.value
 		});
+
 	}
 
-	handleSubmit(event) { // ativa o envio do input para submissão
-//		const target = event.target
-//		const value = target.name === 'nome' ? target.valuename : target.valuepassword;
-		const {nome, email, senha, datanasc, cpf} = this.state;
-		localStorage.setItem('nome', nome);
-		localStorage.setItem('email', email);
-		localStorage.setItem('senha', senha);
-		localStorage.setItem('datanasc', datanasc);
-		localStorage.setItem('cpf', cpf);
+	handleSubmit(event){
 
+		if(this.state.cpf.toString().length != 11 /*|| this.state.nome == null || this.state.senha == null || this.state.email == null || this.state.datanasc == null*/){
+			alert("Dados inválidos ou incompletos")
+		} else {
+
+			this.setState({
+					page: "vai_produtos" // indica a tela de produtos como página que deve ser renderizada				
+				});
+			
+		}
 	}
-	/*	alert('Oooopaaa' + event.target.value);
-		event.preventDefault();
-
-
-		const data = new FormData(event.target); // tentativa de pegar os dados, arrumar esse handlesubmit
-		fetch('/api/form-submit/url', {
-			method: 'POST',
-			body: data,
-		});
-	
-	}*/
 
 	render () { // representa tudo que será mostrado na tela de cadastro
 		if(this.state.page === "vai_produtos" ) { // caso a página que deva ser renderizada seja a de login, redireciona para a página de login
@@ -123,7 +113,7 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 
 						<br />
 
-						<button type="button" class="btn btn-info" onClick={this.chamaProdutos}> Pronto! </button>
+						<button type="button" class="btn btn-info" onClick={this.handleSubmit}> Pronto! </button>
 
 					</form>
 

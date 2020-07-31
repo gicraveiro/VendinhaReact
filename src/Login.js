@@ -17,7 +17,6 @@ class Login extends React.Component { //Tela de login
 		var aux = 0;
 
 		for (var i = 0 ; i < this.props.users.length; i++) {
-			console.log(this.props.users[i].email , this.state.emaillocal)
 			
 			if (this.props.users[i].email == this.state.emaillocal && this.props.users[i].senha == this.state.senhalocal){
 				this.setState({
