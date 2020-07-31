@@ -26,24 +26,67 @@ class Index extends React.Component {
 
 		this.state ={
 			users: [
-				{"email" : "lenelena@gmail.com", "senha" : "alo123", "cpf" :"0123", "nome" : "Lena Elena", 
-				"carrinho" : [
-					{"item" : "1", "qtd" : "0" }]
+				{"email" : "lenelena@gmail.com", "senha" : "alo123", "cpf" :"0", "nome" : "Lena Elena", 
+				"carrinho" : [{"item" : "3", "qtd" : "2"}] 
+				
 				},
 //				{"email" : "gi@email.com", "senha" : "cheguei", "cpf" : "1230", "nome" : "Gi"},
 //				{"email" : "gabriel@gmail.com", "senha" : "abracadabra", "cpf": "234", "nome" : "Gabriel"},
 //				{"email" : "araceli@gmail.com", "senha" : "senhadificil", "cpf" : "3432", "nome" : "Araceli"}
 			], // talvez trocar aspas duplas por aspas simples
-		
+			
 		};
 		this.adicionarCarrinho = this.adicionarCarrinho.bind(this);
 		this.diminuirCarrinho = this.diminuirCarrinho.bind(this);
 	}
 
+	addItem(props, e) {
+
+		e.preventDefault();
+
+		var qtd = props.qtd
+		const user = props.user
+		const index = props.index
+		const itens = this.state.users[user].carrinho.slice();
+
+		itens.push({"item" : props.id, "qtd" : props.qtd});
+
+		this.setState({
+			...this.state.users[this.state.users[user] = itens]
+			
+
+		});
+
+	}
+
+	additem = (e) => { // adicionar parametros id do produto e id do usuario
+		e.preventDefault();
+
+		var itens = this.state.user.carrinho.slice();
+		const userid = this.props.userid
+		const prodid = this.props.produtos.id
+		var qtd = 1
+
+		for (var i=0; i < this.state.users[userid].carrinho.length; i++) {
+			if ( this.state.users[userid].carrinho[i].item === prodid) {
+				qtd = parseInt(this.state.users[userid].carrinho[i].qtd,10) + 1
+			}
+		}
+
+		itens.push({"item" : prodid, "qtd" : qtd});
+
+		this.setState({
+			...this.state.users[this.state.users[userid] = itens]
+			
+
+		});
+
+	}
+
 	adicionarCarrinho(e){// necessario passar como parametro o id do item, o id do usuário
 		
 		e.preventDefault();
-		const value = parseInt(this.state.users[0].carrinho[0].qtd,10) + 1
+		var value = parseInt(this.state.users[0].carrinho[0].qtd,10) + 1
 
 		this.setState({
 			...this.state.users[this.state.users[0].carrinho[0].qtd = value]
@@ -74,7 +117,7 @@ class Index extends React.Component {
 					path="/" 
 					exact={true} 
 					component={() => <App 
-						users={this.state.users}
+					users={this.state.users}
 					/> } 
 				/>
 
@@ -97,10 +140,8 @@ class Index extends React.Component {
 				<Route 
 					path="/produtos" 
 					component={() => <TelaProdutos
-						users={this.state.users}
-						users={this.state.users}
-						id={this.state.users.id}
-						adicionarCarrinho={this.adicionarCarrinho}
+						user={this.state.users[0]}
+						adicionarCarrinho={this.addItem}
 						diminuirCarrinho={this.diminuirCarrinho}
 					 />}
 				/>

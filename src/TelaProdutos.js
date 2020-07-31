@@ -10,8 +10,18 @@ class CardProduto extends React.Component {
 	}
 
 	render () {
-		return (
 
+		const index = this.props.carrinho.map(function(e) {
+					 		return e.item;
+					 	}).indexOf(this.props.id)
+		var qtd = 0
+
+		if (index != -1) {
+			qtd = this.props.carrinho[index].qtd
+		}
+
+		return (
+			//{const prodId = this.props.id}
 			<div class="card" style={{width: "12rem", backgroundColor:"LemonChiffon", color:"sienna"}}>
 				
 				<img src={this.props.image} class="card-img-top" alt="Foto"/>
@@ -24,8 +34,10 @@ class CardProduto extends React.Component {
 					<br />
 					
 					<label>Colocar no carrinho</label> 
-					<button type="button" class="btn btn-info" onClick={this.props.adicionarCarrinho} >+</button>  
-					<label>Qtd: {this.props.carrinho[0].qtd /*ARRUMAR INDICE DO CARRINHO*/} </label> 
+					<button type="button" class="btn btn-info" onClick={this.props.adicionarCarrinho.bind(this,[this.props.user, index, qtd,this.props.id])} >+</button>  
+		
+					 <label>  Qtd: {qtd} </label>					
+				
 					<button type="button" class="btn btn-info" onClick={this.props.diminuirCarrinho} >-</button>
 				</div>
 			
@@ -38,8 +50,9 @@ class CardProduto extends React.Component {
 
 function Lista(props) { 
 
+
 	const listaProd = props.produtos.map((produtos) =>
-		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} carrinho={props.user.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
+		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.user.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
 	);
 
 	return (
@@ -74,7 +87,6 @@ class TelaProdutos extends React.Component {
 		this.setState({
 			carregando: false, 
 			produtos: data, // resgata o produtos com todos os produtos do json, para acessá-los deve-se usar as "props" id, createdAt, name, price, image, stock
-			tam2: data.length //desnecessário - apagar
 		}) 
 	}
 
@@ -86,7 +98,7 @@ class TelaProdutos extends React.Component {
 		else {
 			return (
 				<div>
-					<p> Bem-vinda {this.props.users[0].nome}</p>
+					<p> Bem-vinda {this.props.user.nome}</p>
 					<button type="button" class="btn btn-info" onClick={this.chamaCarrinho}> Ver carrinho de compras </button>
 					<h2> Produtinhos</h2>
 					{this.state.carregando || !this.state.produtos ? (
@@ -95,7 +107,7 @@ class TelaProdutos extends React.Component {
 						
 						<div>
 							
-							<Lista produtos={this.state.produtos} user={this.props.users[0]} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
+							<Lista produtos={this.state.produtos} user={this.props.user} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
 
 						</div>
 				)}
