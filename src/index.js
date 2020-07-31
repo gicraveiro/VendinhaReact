@@ -20,7 +20,7 @@ class App extends React.Component {
 			users: [
 				{"email" : "lenelena@gmail.com", "senha" : "alo123", "cpf" :"0", "nome" : "Lena Elena", 
 				"carrinho" : 
-					[{"item" : 3, "qtd" : 2, "preco" : 993.00},{"item" : 4, "qtd" : 8, "preco" : 259.00}, {"item" : 11, "qtd" : 1, "preco" : 345.00}] 
+					[{"item" : 3, "qtd" : 2, "preco" : 993.00, "name" : "Small Cotton Shoes"},{"item" : 4, "qtd" : 8, "preco" : 259.00, "name" : "Ergonomic Frozen Towels"}, {"item" : 11, "qtd" : 1, "preco" : 345.00, "name" : "Fantastic Metal Cheese"}] 
 				},
 				{"email" : "gi@email.com", "senha" : "cheguei", "cpf" : "1230", "nome" : "Gi",
 				"carrinho" : 
@@ -68,7 +68,7 @@ class App extends React.Component {
 
 				var qtd = this.state.users[user].carrinho[index].qtd // qtd daquele item
 				idP = this.state.users[user].carrinho[index].item // calcula o id do item a partir do state global pois já está no carrinho
-				var carrinho = state.users[user].carrinho.map((item,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do item atualizada
+				carrinho = state.users[user].carrinho.map((item,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do item atualizada
 					if (j === index){
 					
 						return {"item" : idP, "qtd" : qtd+1}; // ou return item + 1 já faz a conta aqui...
@@ -116,11 +116,11 @@ class App extends React.Component {
 
 				this.setState(state => {
 
-					if (qtd == 1) { // remove o item do carrinho
+					if (qtd === 1) { // remove o item do carrinho
 						var carrinho = state.users[user].carrinho.filter((item,j) => index !== j);
 					}
 					else {
-						var carrinho = state.users[user].carrinho.map((item,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do item atualizada
+						carrinho = state.users[user].carrinho.map((item,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do item atualizada
 							if (j === index){
 							
 								return {"item" : idP, "qtd" : qtd-1}; 
@@ -154,6 +154,8 @@ class App extends React.Component {
 		const carrinho = []
 		const userId = 0
 
+		console.log(this.state.users[userId].carrinho)
+
 		this.setState( state => {
 
 			const users = state.users.map((user, j) => { // atualiza o vetor de users
@@ -162,10 +164,11 @@ class App extends React.Component {
 							}
 							return user
 						})
-
+			console.log(users)
 			return{
 				users,
 			}
+			
 		})
 	}
 	//Função que calcula o preço total
@@ -229,16 +232,18 @@ class App extends React.Component {
 					path="/carrinho" 
 					component={() => <TelaCarrinho 
 						users={this.state.users}
+						carrinho={this.state.users[0].carrinho}
 					/>}
 				/>
 
 				<Route 
 					path="/pedido" 
 					component={() => <TelaPedido
-						users={this.state.users}
+						//users={this.state.users}
 						calcular={this.calcular}
-						index={0}
-						qtd={0}
+						//index={0}
+						//qtd={0}
+						carrinho={this.state.users[0].carrinho}
 					/>}
 				/>
 			

@@ -15,22 +15,35 @@ class MiniCard extends React.Component {
 		}*/
 		return ( // {this.props.price}
 
-			<div class="card" style={{width: "12rem", backgroundColor:"LemonChiffon", color:"sienna"}}>
+			<div class="card" style={{width: "12rem", backgroundColor:"aliceblue", color:"sienna"}}>
 				
 				<div class="card-body">
-					<h6> {/*this.props.name*/} lala </h6>
+					<h6> {this.props.name} </h6> {/*NOME NAO ESTÁ CHEGANDO*/}
 				
-					<div> $  </div> 
+					<div> $ {this.props.price} </div> 
  
 					<button type="button" class="btn btn-info" /*onClick={this.props.adicionarCarrinho.bind(this,[this.props.user, index, qtd,this.props.id])}*/ >+</button>  
 		
-					<label>  Qtd: {qtd} </label>					
+					<label>  Qtd: {this.props.qtd} </label>					
 				
 					<button type="button" class="btn btn-info" onClick={this.props.diminuirCarrinho} >-</button>
 				</div>
 			</div>
 		);
 	}
+}
+
+function Lista(props) { 
+
+	const listaProd = props.carrinho.map((produtos) =>
+//		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.user.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
+		<MiniCard key={produtos.item.toString()} name={produtos.name} price={produtos.preco} qtd={produtos.qtd} />
+	);
+
+	return (
+		<ul class="row">{listaProd}</ul>
+	);
+
 }
 
 
@@ -59,7 +72,9 @@ class TelaCarrinho extends React.Component {
 				<div>	
 					<h1>Carrinho de compras</h1>
 
-					<MiniCard />
+					<Lista carrinho={this.props.carrinho} />
+
+					{/*<MiniCard name={this.props.users[0].carrinho[0].name} price={this.props.users[0].carrinho[0].price}/>*/}
 
 					<div class="form-group" style={{width: "20rem"}}>
 

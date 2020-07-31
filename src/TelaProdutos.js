@@ -15,12 +15,11 @@ class CardProduto extends React.Component {
 		}
 
 //		console.log(this)
-
 //		const userIndex = this.props.users.indexOf(this.props.user)
 
 		return (
 			//{const prodId = this.props.id}
-			<div class="card" style={{width: "12rem", backgroundColor:"LemonChiffon", color:"sienna"}}>
+			<div class="card" style={{width: "12rem", backgroundColor:"aliceblue", color:"sienna"}}>
 				
 				<img src={this.props.image} class="card-img-top" alt="Foto"/>
 				<div class="card-body">
@@ -34,7 +33,7 @@ class CardProduto extends React.Component {
 					<label>Colocar no carrinho</label> 
 					<button type="button" class="btn btn-info" idP={this.props.id} user={this.props.user}  onClick={this.props.adicionarCarrinho/*.bind(this,[this.props.user, index, qtd,this.props.id])*/} >+</button>  
 		
-				 	<label>  Qtd: {/*this.props.carrinho[index].qtd*//* ARRUMAR A QUANTIDADE*/} </label> 				
+				 	<label>  Qtd: {qtd} {/* ARRUMAR A QUANTIDADE*/} </label> 			
 				
 					<button type="button" class="btn btn-info" onClick={this.props.diminuirCarrinho} >-</button>
 				</div>
