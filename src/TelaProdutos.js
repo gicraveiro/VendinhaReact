@@ -6,7 +6,7 @@ class CardProduto extends React.Component {
 	render () {
 
 		const index = this.props.carrinho.map(function(e) {
-					 		return e.item;
+					 		return e.item.toString();
 					 	}).indexOf(this.props.id)
 		var qtd = 0
 
@@ -16,6 +16,8 @@ class CardProduto extends React.Component {
 
 //		console.log(this)
 //		const userIndex = this.props.users.indexOf(this.props.user)
+		console.log(this.props.carrinho)
+		console.log(this.props.id, qtd, index)
 
 		return (
 			//{const prodId = this.props.id}
@@ -33,7 +35,7 @@ class CardProduto extends React.Component {
 					<label>Colocar no carrinho</label> 
 					<button type="button" class="btn btn-info" idP={this.props.id} user={this.props.user}  onClick={this.props.adicionarCarrinho/*.bind(this,[this.props.user, index, qtd,this.props.id])*/} >+</button>  
 		
-				 	<label>  Qtd: {qtd} {/* ARRUMAR A QUANTIDADE*/} </label> 			
+				 	<label>  Qtd: {qtd}  </label> 			
 				
 					<button type="button" class="btn btn-info" onClick={this.props.diminuirCarrinho} >-</button>
 				</div>
