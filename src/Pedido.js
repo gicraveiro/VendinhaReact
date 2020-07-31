@@ -15,7 +15,7 @@ class TelaPedido extends React.Component {
 
 				<br />
 
-				<button type="button" class="btn btn-info" onClick={this.esvaziarCarrinho}> Finalizar compra! </button>
+				<button type="button" class="btn btn-info" onClick={this.props.esvaziarCarrinho}> Finalizar compra! </button>
 			</div>
 
 		);
