@@ -13,12 +13,12 @@ class Login extends React.Component { //Tela de login
 		this.handleChange = this.handleChange.bind(this);
 	}
 
-	handleClick = (props) => {
+	handleClick(props) {
 		var aux = 0;
 
 		for (var i = 0 ; i < this.props.users.length; i++) {
 			
-			if (this.props.users[i].email == this.state.emaillocal && this.props.users[i].senha == this.state.senhalocal){
+			if (this.props.users[i].email === this.state.emaillocal && this.props.users[i].senha === this.state.senhalocal){
 				this.setState({
 					page: "vai_produtos" // indica a tela de produtos como página que deve ser renderizada				
 				});
@@ -26,7 +26,7 @@ class Login extends React.Component { //Tela de login
 			}
 		}
 
-		if (aux == 0) { // mensagem de erro caso o usuário não esteja no sistema
+		if (aux === 0) { // mensagem de erro caso o usuário não esteja no sistema
 			alert("Usuário não reconhecido - email ou senha inválidos");
 		}
 		

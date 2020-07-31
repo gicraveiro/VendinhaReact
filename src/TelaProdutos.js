@@ -1,13 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router'
-import { render } from 'react-dom'
 
 class CardProduto extends React.Component {
-
-	constructor(props){
-		super(props);
-
-	}
 
 	render () {
 
@@ -16,7 +10,7 @@ class CardProduto extends React.Component {
 					 	}).indexOf(this.props.id)
 		var qtd = 0
 
-		if (index != -1) {
+		if (index !== -1) {
 			qtd = this.props.carrinho[index].qtd
 		}
 

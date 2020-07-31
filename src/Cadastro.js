@@ -17,7 +17,7 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	chamaProdutos = () => { // indica a tela de produtos como página que deve ser renderizada
+	chamaProdutos() { // indica a tela de produtos como página que deve ser renderizada
 		this.setState({
 			page: "vai_produtos"
 		});
@@ -34,8 +34,8 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 
 	handleSubmit(event){
 
-		if(this.state.cpf.toString().length != 11 || this.state.nome == '' || this.state.senha == '' || //validação básica de cpf e email e todos os campos devem estar preenchidos
-			this.state.email == '' || this.state.datanasc == '' || !this.state.email.includes(".") || 
+		if(this.state.cpf.toString().length !== 11 || this.state.nome === '' || this.state.senha === '' || //validação básica de cpf e email e todos os campos devem estar preenchidos
+			this.state.email === '' || this.state.datanasc === '' || !this.state.email.includes(".") || 
 			!this.state.email.includes("@")){
 			alert("Dados inválidos ou incompletos")
 		} else {

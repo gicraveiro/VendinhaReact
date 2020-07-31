@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App.js';
+import TelaInicial from './TelaInicial.js';
 import Login from './Login.js'
 import TelaCadastro from './Cadastro.js'
 import TelaProdutos from './TelaProdutos.js'
@@ -11,15 +11,14 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom'
 // indica qual componente de tela deve ser renderizado, de acordo com o path
 // inicialmente indica o componente App
 
-// criar state global
-
+/*
 export function adicionarCarrinho (qtd) {
 	return qtd + 1;
 
 }
+*/
 
-
-class Index extends React.Component {
+class App extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -27,19 +26,28 @@ class Index extends React.Component {
 		this.state ={
 			users: [
 				{"email" : "lenelena@gmail.com", "senha" : "alo123", "cpf" :"0", "nome" : "Lena Elena", 
-				"carrinho" : [{"item" : "3", "qtd" : "2"}] 
-				
+				"carrinho" : 
+					[{"item" : "3", "qtd" : "2"}] 
 				},
-//				{"email" : "gi@email.com", "senha" : "cheguei", "cpf" : "1230", "nome" : "Gi"},
-//				{"email" : "gabriel@gmail.com", "senha" : "abracadabra", "cpf": "234", "nome" : "Gabriel"},
-//				{"email" : "araceli@gmail.com", "senha" : "senhadificil", "cpf" : "3432", "nome" : "Araceli"}
-			], // talvez trocar aspas duplas por aspas simples
+				{"email" : "gi@email.com", "senha" : "cheguei", "cpf" : "1230", "nome" : "Gi",
+				"carrinho" : 
+					[] 
+				},
+				{"email" : "gabriel@email.com", "senha" : "abracadabra", "cpf": "234", "nome" : "Gabriel",
+				"carrinho" : 
+					[]
+				},
+				{"email" : "araceli@email.com", "senha" : "senhadificil", "cpf" : "3432", "nome" : "Araceli",
+				"carrinho" : 
+					[]
+				}
+			], 
 			page: "here"
 		};
 		this.adicionarCarrinho = this.adicionarCarrinho.bind(this);
 		this.diminuirCarrinho = this.diminuirCarrinho.bind(this);
 	}
-
+/*
 	addCadastro(props){
 
 		const updatedUsers = this.state.users
@@ -52,6 +60,7 @@ class Index extends React.Component {
 
 		});
 	}
+*/
 
 	addItem(props, e) {
 
@@ -65,14 +74,13 @@ class Index extends React.Component {
 		itens.push({"item" : props.id, "qtd" : props.qtd});
 
 		this.setState({
-			...this.state.users[this.state.users[user] = itens]
-			
+			...this.state.users[this.state.users[user] = itens]		
 
 		});
 
 	}
 
-	additem = (e) => { // adicionar parametros id do produto e id do usuario
+	additem2 (e) { // adicionar parametros id do produto e id do usuario
 		e.preventDefault();
 
 		var itens = this.state.user.carrinho.slice();
@@ -129,7 +137,7 @@ class Index extends React.Component {
 				<Route 
 					path="/" 
 					exact={true} 
-					component={() => <App 
+					component={() => <TelaInicial 
 					users={this.state.users}
 					/> } 
 				/>
@@ -137,7 +145,6 @@ class Index extends React.Component {
 				<Route 
 					path="/login" 
 					component={() => <Login
-						users={this.state.users}
 						users={this.state.users}
 						id={this.state.users.id}
 					/> }
@@ -153,7 +160,7 @@ class Index extends React.Component {
 				<Route 
 					path="/produtos" 
 					component={() => <TelaProdutos
-						user={this.state.users[0]}
+						user={this.state.users[0]} // ARRUMAR ÍNDICE DO USUÁRIO
 						adicionarCarrinho={this.addItem}
 						diminuirCarrinho={this.diminuirCarrinho}
 					 />}
@@ -182,6 +189,6 @@ class Index extends React.Component {
 }
 
 ReactDOM.render (
-	<Index />,
+	<App />,
 	document.getElementById('root')
 );
