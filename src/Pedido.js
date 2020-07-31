@@ -1,6 +1,8 @@
 import React from 'react';
 //import { Redirect } from 'react-router'
 
+
+
 class TelaPedido extends React.Component {
 
 
@@ -9,7 +11,9 @@ class TelaPedido extends React.Component {
 			<div> 
 				<h1>Resumo do pedido</h1> 
 
-				
+				<label> {this.props.calcular()} </label>
+
+				<br />
 
 				<button type="button" class="btn btn-info" onClick={this.chamaFinaliza}> Finalizar compra! </button>
 			</div>

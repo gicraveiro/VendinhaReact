@@ -1,6 +1,39 @@
 import React from 'react';
 import { Redirect } from 'react-router'
 
+class MiniCard extends React.Component {
+
+	render () {
+
+/*		const index = this.props.carrinho.map(function(e) {
+			return e.item;
+		}).indexOf(this.props.id)
+*/		var qtd = 0
+
+		/*if (index !== -1) {
+			//qtd = this.props.carrinho[index].qtd
+		}*/
+		return ( // {this.props.price}
+
+			<div class="card" style={{width: "12rem", backgroundColor:"LemonChiffon", color:"sienna"}}>
+				
+				<div class="card-body">
+					<h6> {/*this.props.name*/} lala </h6>
+				
+					<div> $  </div> 
+ 
+					<button type="button" class="btn btn-info" /*onClick={this.props.adicionarCarrinho.bind(this,[this.props.user, index, qtd,this.props.id])}*/ >+</button>  
+		
+					<label>  Qtd: {qtd} </label>					
+				
+					<button type="button" class="btn btn-info" onClick={this.props.diminuirCarrinho} >-</button>
+				</div>
+			</div>
+		);
+	}
+}
+
+
 class TelaCarrinho extends React.Component {
 
 	constructor(props){
@@ -25,6 +58,8 @@ class TelaCarrinho extends React.Component {
 			return (
 				<div>	
 					<h1>Carrinho de compras</h1>
+
+					<MiniCard />
 
 					<div class="form-group" style={{width: "20rem"}}>
 
