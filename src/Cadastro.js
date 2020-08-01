@@ -2,19 +2,24 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import CPF, { validate } from 'cpf-check'
 
-class TelaCadastro extends React.Component { // Tela de Cadastro
-	constructor(props) { //construtor
-		super(props);
-		this.state = { // inicializa as variáveis de cadastro que se atualizarão com o input do usuário
-			nome:'',
+//Tela de cadastro
+// inclui campos de nome, email, senha, data de nascimento e cpf com validação e botão de enviar
+
+// Tela de Cadastro
+class TelaCadastro extends React.Component { 
+
+	constructor(props) {  // inicializa os dados do componente
+		super(props); //necessário em todo construtor (até onde entendi)
+
+		this.state = { 
+			pagina: 'tela_cadastro', //página que deve ser renderizada 
+			nome:'', // inicializa os campos de cadastro que se atualizarão com o input do usuário
 			email:'',
 			senha:'',
 			data_nascimento:'',
 			cpf:'',
-			pagina: 'tela_cadastro',
-
 		};
-		this.handleChange = this.handleChange.bind(this);
+		this.handleChange = this.handleChange.bind(this); // necessário para que as funções sejam reconhecidas nas chamadas
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -22,26 +27,23 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 		this.setState({
 			pagina: "tela_produtos"
 		});
-
 	}
 
 	handleChange(event) { // ativa mudança no estado do input (mostra e guarda no state local cada novo caracter digitado no input)
-
 		this.setState({
 			[event.target.name]: event.target.value
 		});
-
 	}
 
-	handleSubmit(event){
+	handleSubmit(event){ // valida dados de input e redireciona para a página de produtos, ativado com o botão de enviar
 
 		var validar_email = require("email-validator")
 
-		if( !CPF.validate(this.state.cpf.toString()) || this.state.nome === '' || this.state.senha === '' || //validação de cpf e email importada, todos os campos devem estar preenchidos
+		// se algum dado é inválido ou nulo, validação de cpf e email importada
+		if( !CPF.validate(this.state.cpf.toString()) || this.state.nome === '' || this.state.senha === '' || 
 		 this.state.data_nascimento === '' || !validar_email.validate(this.state.email)){
 		
 			alert("Dados inválidos ou incompletos")
-			console.log("cpf", this.state.cpf.toString(), !validate(this.state.cpf.toString()) )
 		
 		} else {
 
@@ -71,7 +73,7 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 							<input 
 							name="nome"
 							type="text" 
-							value_name={this.state.nome} 
+							value_name={this.state.nome} // recebe o input do usuário
 							onChange={this.handleChange} />
 						</label>
 
@@ -82,7 +84,7 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 							<input 
 							name="email"
 							type="email" 
-							value_email={this.state.email} 
+							value_email={this.state.email} // recebe o input do usuário
 							onChange={this.handleChange} />
 						</label>
 
@@ -93,7 +95,7 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 							<input 
 							name="senha"
 							type="password" 
-							value_senha={this.state.senha} 
+							value_senha={this.state.senha} // recebe o input do usuário
 							onChange={this.handleChange} />
 						</label>
 
@@ -104,7 +106,7 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 							<input 
 							name="data_nascimento"
 							type="date" 
-							value_data_nascimento={this.state.data_nascimento} 
+							value_data_nascimento={this.state.data_nascimento} // recebe o input do usuário
 							onChange={this.handleChange} />
 						</label>
 
@@ -115,7 +117,7 @@ class TelaCadastro extends React.Component { // Tela de Cadastro
 							<input 
 							name="cpf"
 							type="text" 
-							value_cpf={this.state.cpf} 
+							value_cpf={this.state.cpf} // recebe o input do usuário
 							onChange={this.handleChange} />
 						</label>
 

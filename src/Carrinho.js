@@ -1,63 +1,73 @@
 import React from 'react';
 import { Redirect } from 'react-router'
 
-class MiniCard extends React.Component {
+// Tela do carrinho de compras 
+// inclui todos os minicards correspondentes a cada produto se tiver produtos no carrinho, 
+// escolha da forma de pagamento e botão de finalização da compra
+
+// Layout do minicard para cada produto no carrinho
+class ProdutoNoCarrinho extends React.Component {
 
 	render () {
 
 		return ( 
 
-			<div className="card" style={{width: "12rem", backgroundColor:"aliceblue", color:"teal"}}>
+			<div name="card_produto_no_carrinho" className="card" style={{width: "12rem", backgroundColor:"aliceblue", color:"teal"}}>	
 				
-			
 				<div className="card-body">
-					<h6> {this.props.name} </h6> 
+
+					<h6 name="nome_produto" > {this.props.name} </h6>
+					
+					<div name="preco_produto"> $ {this.props.price} </div> 
+ 		
+					<label name="qtd_produto">  Qtd: {this.props.qtd} </label>					
 				
-					<div> $ {this.props.price} </div> 
- 
-					{/*<button type="button" className="btn btn-info" idProduto={this.props.id} user={this.props.user}  onClick={() => this.props.adicionarCarrinho(this.props.id, this.props.price, this.props.name)} >+</button>*/}   
-		
-					<label>  Qtd: {this.props.qtd} </label>					
-				
-					{/*<button type="button" className="btn btn-info" idProduto={this.props.id} onClick={() => this.props.diminuirCarrinho(this.props.id, this.props.price, this.props.name)} >-</button>*/}
 				</div>
 			</div>
 		);
 	}
 }
 
-function Lista(props) { 
+// retorna uma lista com todos os produtos do carrinho
+function Carrinho(props) { 
 
-	const listaProd = props.carrinho.map((produtos) =>
-//		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.user.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
-		<MiniCard key={produtos.item.toString()} name={produtos.name} price={produtos.preco} qtd={produtos.qtd} id={produtos.item} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
+	if(props.carrinho.length === 0) { // se a quantidade de itens do carrinho é 0
+		return (
+			<label> O carrinho está vazio! </label> 
+		);
+	}
+
+	// chama o minicard de produto para cada produto que está no carrinho
+	const ProdutoCarrinho = props.carrinho.map((produtos) =>
+		<ProdutoNoCarrinho key={produtos.item_id.toString()} name={produtos.name} price={produtos.preco} qtd={produtos.qtd} />
 	);
 
 	return (
-		<ul className="row">{listaProd}</ul>
+		<ul className="row">{ProdutoCarrinho}</ul> // retorna lista com todos os cards dos produtos no carrinho
 	);
 
 }
 
-
+// Tela do carrinho de compras
 class TelaCarrinho extends React.Component {
 
 	constructor(props){
-		super(props);
+		super(props); //necessário em todo construtor (até onde entendi)
 
 		this.state = {
 			pagina: "tela_carrinho",
 		}
+		this.chamaFinaliza = this.chamaFinaliza.bind(this); // necessário para que as funções sejam reconhecidas nas chamadas
 	}
 
-	chamaFinaliza = () => { // indica a tela de produtos como página que deve ser renderizada
+	chamaFinaliza() { // indica a tela de produtos como página que deve ser renderizada
 		this.setState({
 			pagina: "tela_pedido"
 		});
 	}
 
 	render (){
-		if(this.state.pagina === "tela_pedido" ) { // caso a página que deva ser renderizada seja a de login, redireciona para a página de login
+		if(this.state.pagina === "tela_pedido" ) { // redireciona para a página de login se for indicado
 			return <Redirect to ="/pedido" />
 		}
 		else {
@@ -65,20 +75,19 @@ class TelaCarrinho extends React.Component {
 				<div>	
 					<h1>Carrinho de compras</h1>
 
-					<Lista carrinho={this.props.carrinho} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
+					<Carrinho carrinho={this.props.carrinho} />
 
-					{/*<MiniCard name={this.props.users[0].carrinho[0].name} price={this.props.users[0].carrinho[0].price}/>*/}
+					<div name="formulario" className="form-group" style={{width: "20rem"}}>
 
-					<div className="form-group" style={{width: "20rem"}}>
-
-						<label>Forma de pagamento</label>
-						<select className="form-control">
+						<label name="label_forma_pagamento">Forma de pagamento</label>
+						<select name="select_forma_pagamento" className="form-control">
 							<option>Boleto</option>
 							<option>Cartão de crédito</option>
 							<option>Cartão de débito</option>
 						</select>
 					</div>
-					<button type="button" className="btn btn-info" onClick={this.chamaFinaliza}> Finalizar compra! </button>
+
+					<button name="botao_finalizar_compra"type="button" className="btn btn-info" onClick={this.chamaFinaliza}> Finalizar compra! </button>
 				</div>
 
 			);
