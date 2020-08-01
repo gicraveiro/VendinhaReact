@@ -5,34 +5,34 @@ class CardProduto extends React.Component {
 
 	render () {
 
-		const index = this.props.carrinho.map(function(e) {
+		const indice_no_carrinho = this.props.carrinho.map(function(e) { // procura o produto dentro do carrinho e retorna o seu indice no carrinho se encontrar
 					 		return e.item.toString();
 					 	}).indexOf(this.props.id)
 		var qtd = 0
 
-		if (index !== -1) {
-			qtd = this.props.carrinho[index].qtd
+		if (indice_no_carrinho !== -1) {
+			qtd = this.props.carrinho[indice_no_carrinho].qtd
 		}
 
 		return (
-			//{const prodId = this.props.id}
-			<div class="card" style={{width: "12rem", backgroundColor:"aliceblue", color:"sienna"}}>
+
+			<div className="card" style={{width: "12rem", backgroundColor:"aliceblue", color:"teal"}}>
 				
-				<img src={this.props.image} class="card-img-top" alt="Foto"/>
-				<div class="card-body">
+				<img src={this.props.image} className="card-img-top" alt="Foto"/>
+				<div className="card-body">
 					
-					<h6 class="card-title"> {this.props.name} </h6>
+					<h6 className="card-title"> {this.props.name} </h6>
 				
-					<div> $ {this.props.price} </div>
+					<div> $ {this.props.price} </div> 
 
 					<br />
 					
 					<label>Colocar no carrinho</label> 
-					<button type="button" class="btn btn-info" idP={this.props.id} user={this.props.user}  onClick={/*(idP, preco, name) => */() => this.props.adicionarCarrinho(this.props.id, this.props.price, this.props.name)/*this.props.adicionarCarrinho*//*.bind(this,[this.props.user, index, qtd,this.props.id])*/} >+</button>  
+					<button type="button" className="btn btn-info" id_produto={this.props.id} onClick={() => this.props.adicionarCarrinho(this.props.id, this.props.price, this.props.name)} >+</button>  
 		
 				 	<label>  Qtd: {qtd}  </label> 			
 				
-					<button type="button" class="btn btn-info" idP={this.props.id} onClick={() => this.props.diminuirCarrinho(this.props.id, this.props.price, this.props.name)} >-</button>
+					<button type="button" className="btn btn-info" id_produto={this.props.id} onClick={() => this.props.diminuirCarrinho(this.props.id, this.props.price, this.props.name)} >-</button>
 				</div>
 			
 			</div>
@@ -46,11 +46,11 @@ function Lista(props) {
 
 
 	const listaProd = props.produtos.map((produtos) =>
-		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.carrinho} /*carrinho={props.user.carrinhoP}*/adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
+		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
 	);
 
 	return (
-		<ul class="row">{listaProd}</ul>
+		<ul className="row">{listaProd}</ul>
 	);
 
 }
@@ -62,14 +62,14 @@ class TelaProdutos extends React.Component {
 		this.state = {
 			carregando: true,
 			produtos: null,
-			page: "here"
+			pagina: "here"
 		};
 
 	}
 
 	chamaCarrinho = () => { // indica a tela de produtos como página que deve ser renderizada
 		this.setState({
-			page: "vai_carrinho"
+			pagina: "tela_carrinho"
 		});
 	}
 
@@ -86,22 +86,22 @@ class TelaProdutos extends React.Component {
 
 	render () {
 	
-		if(this.state.page === "vai_carrinho" ) { // caso a página que deva ser renderizada seja a de login, redireciona para a página de login
+		if(this.state.pagina === "tela_carrinho" ) { // caso a página que deva ser renderizada seja a de login, redireciona para a página de login
 			return <Redirect to ="/carrinho" />
 		}
 		else {
 			return (
 				<div>
 					<p> Bem-vinda {this.props.user.nome}</p>
-					<button type="button" class="btn btn-info" onClick={this.chamaCarrinho}> Ver carrinho de compras </button>
-					<h2> Produtinhos</h2>
+					<button type="button" className="btn btn-info" onClick={this.chamaCarrinho}> Ver carrinho de compras </button>
+					<h2 text-align='center'> Produtinhos</h2>
 					{this.state.carregando || !this.state.produtos ? (
 						<div>carregando...</div> 
 					) : ( 
 						
 						<div>
 							
-							<Lista produtos={this.state.produtos} /*user={this.props.user}*/ carrinho={this.props.carrinho} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
+							<Lista produtos={this.state.produtos}  carrinho={this.props.carrinho} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
 
 						</div>
 				)}

@@ -6,21 +6,21 @@ class Login extends React.Component { //Tela de login
 	constructor(props) { //construtor, inicializa a função
 		super(props)
 		this.state = {
-			page: "here", // página que deve ser renderizada
-			emaillocal: "",
-			senhalocal: ""
+			pagina: "tela_login", // página que deve ser renderizada
+			email_do_input: "",
+			senha_do_input: ""
 		};
 		this.handleChange = this.handleChange.bind(this);
 	}
-
+// encontra o índice do carrinho que contém o produto que deve ser 
 	handleClick(props) {
 		var aux = 0;
 
 		for (var i = 0 ; i < this.props.users.length; i++) {
 			
-			if (this.props.users[i].email === this.state.emaillocal && this.props.users[i].senha === this.state.senhalocal){
+			if (this.props.users[i].email === this.state.email_do_input && this.props.users[i].senha === this.state.senha_do_input){
 				this.setState({
-					page: "vai_produtos" // indica a tela de produtos como página que deve ser renderizada				
+					pagina: "tela_produtos" // indica a tela de produtos como página que deve ser renderizada				
 				});
 				aux = 1
 			}
@@ -41,7 +41,7 @@ class Login extends React.Component { //Tela de login
 	}
 
 		render () { 
-			if(this.state.page === "vai_produtos" ) { // caso a página que deva ser renderizada seja a de login, redireciona para a página de login
+			if(this.state.pagina === "tela_produtos" ) { // caso a página que deva ser renderizada seja a de login, redireciona para a página de login
 				return <Redirect to ="/produtos" />
 			}
 			else {
@@ -49,17 +49,17 @@ class Login extends React.Component { //Tela de login
 					<div>
 						<h1>Faça seu login</h1>
 
-						<div class="form-group" style={{width: "20rem"}}> 
+						<div className="form-group" style={{width: "20rem"}}> 
 							
-							<label name="emaillocal" id="ExampEmail" adb="EmailHelp">Email</label>
-							<input name="emaillocal" type="email" class="form-control" id="ExampleEmail" valueE={this.state.emaillocal} onChange={this.handleChange}/>
+							<label name="email_do_input" id="ExampEmail" adb="EmailHelp">Email</label>
+							<input name="email_do_input" type="email" className="form-control" value_email={this.state.email_do_input} onChange={this.handleChange}/>
 							
-							<label name="senhalocal" id="ExampPassword" adb="PasswordHelp">Senha</label>
-						 	<input name="senhalocal" type="password" class="form-control" id="ExamplePassword" valueP={this.state.senhalocal} onChange={this.handleChange}/>
+							<label name="senha_do_input" id="ExampPassword" adb="PasswordHelp">Senha</label>
+						 	<input name="senha_do_input" type="password" className="form-control" value_senha={this.state.senha_do_input} onChange={this.handleChange}/>
 							
 							<br/>
 							
-							<button type="button" class="btn btn-info" onClick={this.handleClick.bind(this,this.props.users)}>Pronto!</button>
+							<button type="button" className="btn btn-info" onClick={this.handleClick.bind(this,this.props.users)}>Pronto!</button>
 						
 						</div>
 					</div>

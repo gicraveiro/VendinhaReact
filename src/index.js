@@ -18,63 +18,44 @@ class App extends React.Component {
 
 		this.state ={
 			users: [
-				{"email" : "lenelena@gmail.com", "senha" : "alo123", "cpf" :"0", "nome" : "Lena Elena", 
-				"carrinhoP" : 
-					[{"item" : 3, "qtd" : 2, "preco" : 993.00, "name" : "Small Cotton Shoes"},{"item" : 4, "qtd" : 8, "preco" : 259.00, "name" : "Ergonomic Frozen Towels"}, {"item" : 11, "qtd" : 5, "preco" : 345.00, "name" : "Fantastic Metal Cheese"}] 
-				},
-				{"email" : "gi@email.com", "senha" : "cheguei", "cpf" : "1230", "nome" : "Gi",
-				"carrinhoP" : 
-					[] 
-				},
-				{"email" : "gabriel@email.com", "senha" : "abracadabra", "cpf": "234", "nome" : "Gabriel",
-				"carrinhoP" : 
-					[]
-				},
-				{"email" : "araceli@email.com", "senha" : "senhadificil", "cpf" : "3432", "nome" : "Araceli",
-				"carrinhoP" : 
-					[]
-				}
+				{"email" : "lenelena@gmail.com", "senha" : "alo123", "cpf" :"0", "nome" : "Lena Elena"},
+				{"email" : "gi@email.com", "senha" : "cheguei", "cpf" : "1230", "nome" : "Gi"},
+				{"email" : "gabriel@email.com", "senha" : "abracadabra", "cpf": "234", "nome" : "Gabriel"},
+				{"email" : "araceli@email.com", "senha" : "senhadificil", "cpf" : "3432", "nome" : "Araceli"}
 			], 
 			carrinho: [],
-			page: "here"
+			pagina: "here"
 		};
 		this.adicionarCarrinho = this.adicionarCarrinho.bind(this);
 		this.diminuirCarrinho = this.diminuirCarrinho.bind(this);
 		this.esvaziarCarrinho = this.esvaziarCarrinho.bind(this);
-		this.calcular = this.calcular.bind(this);
+		this.calcular_preco_total = this.calcular_preco_total.bind(this);
 
 	}
 
 	//Função para adicionar uma unidade de um item no carrinho, necessário passar id do produto e id do usuário como parâmetros FALTA FAZER
-	adicionarCarrinho(idP, preco, name) {
+	adicionarCarrinho(id_produto, preco, name) {
 
-		console.log("Entrando em adicionar carrinho")
-
-//		e.preventDefault();
-
-		var user = 0 // e.target.user ? // id do usuário , necessário buscar de algum lugar
-
-		// usar .users[user] na versão carrinho pessoal de cada usuario
-		var index = this.state.carrinho.map(function(e) { // indice do produto dentro do carrinho
+		var indice_do_produto_no_carrinho = this.state.carrinho.map(function(e) { // indice do produto dentro do carrinho
 					 		return e.item.toString();
-					 	}).indexOf(idP) // ENCONTRA O ÍNDICE DO ITEM DE ID idP 
+					 	}).indexOf(id_produto) // encontra o índice do carrinho que contém o produto que deve ser adicionado
 
 		this.setState(state => {
 
-			if (index === -1) { // item não existe no carrinho
+			if (indice_do_produto_no_carrinho === -1) { // item não existe no carrinho
 
-				index = this.state.carrinho.length // indice do produto no carrinho é o próximo indice disponível
+				indice_do_produto_no_carrinho = this.state.carrinho.length // indice do produto no carrinho é o próximo indice disponível
 				var qtd = 0 // qtd do item é 0
-				var carrinho = state.carrinho.concat({"item" : parseInt(idP), "qtd" : 1, "preco" : parseFloat(preco), "name" : name}); //cria uma cópia do carrinho com o novo item adicionado
+				var carrinho = state.carrinho.concat({"item" : parseInt(id_produto), "qtd" : 1, "preco" : parseFloat(preco), "name" : name}); //cria uma cópia do carrinho com o novo item adicionado
 			}
 			else {	
 
-				var qtd = this.state.carrinho[index].qtd // qtd daquele item
+				qtd = this.state.carrinho[indice_do_produto_no_carrinho].qtd // qtd daquele item
 
 				carrinho = state.carrinho.map((item,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do item atualizada
-					if (j === index){
+					if (j === indice_do_produto_no_carrinho){
 					
-						return {"item" : parseInt(idP), "qtd" : qtd+1, "preco" : parseFloat(preco), "name" : name}; // INCLUIR PREÇO E NAME
+						return {"item" : parseInt(id_produto), "qtd" : qtd+1, "preco" : parseFloat(preco), "name" : name}; // INCLUIR PREÇO E NAME
 		
 					} else {
 
@@ -82,16 +63,7 @@ class App extends React.Component {
 					}
 				});
 			}
-			console.log("checando como ta o carrinho antes de atribui-lo ao users", carrinho)
 
-/*			const users = state.users.map((user, j) => { // atualiza o vetor de users
-				if (user === j){ 
-					user.carrinho = carrinho
-				}
-				return user
-			})*/
-
-			console.log("novo carrinho", this.state.carrinho)
 			return { // coloca o vetor de users atualizado no state
 				carrinho,
 			}
@@ -101,53 +73,39 @@ class App extends React.Component {
 	}
 
 // Função que diminui a quantidade de um item no carrinho, necessário passar parâmetros de id do produto, índice do usuário no vetor de usuários do state FALTA FAZER
-	diminuirCarrinho(idP, preco, name) {
+	diminuirCarrinho(id_produto, preco, name) {
 
-		console.log("Entrando em diminuir carrinho")
-
-		//e.preventDefault();
-
-		//var user = 0 // e.target.user ? // id do usuário , necessário buscar de algum lugar
-		//var idP = e.target.idP//this.idP //7 // id do produto, passar como parametro
-
-		var index = this.state.carrinho.map(function(e) { // indice do produto dentro do carrinho
+		var indice_do_produto_no_carrinho = this.state.carrinho.map(function(e) { 
 					 		return e.item.toString();
-					 	}).indexOf(idP) // ENCONTRA O ÍNDICE DO ITEM DE ID idP // funciona com numero  hardcoded
-		console.log("idP", idP)
-		console.log("index", index)
+					 	}).indexOf(id_produto) // encontra o índice do carrinho que contém o produto que deve ser diminuído
 
-		if (index !== -1) { // item existe no carrinho
-			var qtd = this.state.carrinho[index].qtd // qtd daquele item
+		if (indice_do_produto_no_carrinho !== -1) { // item existe no carrinho
+
+			var qtd = this.state.carrinho[indice_do_produto_no_carrinho].qtd // qtd daquele item
 			
-			if (qtd > 0){ // só se a qtd do item for maior que 0, é possível diminuir sua quantidade no carrinho
+			if (qtd > 0){ // só se a qtd do item for maior que 0 será possível diminuir sua quantidade no carrinho
 
-				idP = this.state.carrinho[index].item // calcula o id do item a partir do state global pois já está no carrinho
+				id_produto = this.state.carrinho[indice_do_produto_no_carrinho].item // calcula o id do item a partir do state global pois já está no carrinho
 
 				this.setState(state => {
 
 					if (qtd === 1) { // remove o item do carrinho
-						var carrinho = state.carrinho.filter((item,j) => index !== j);
+						var carrinho = state.carrinho.filter((produto,j) => indice_do_produto_no_carrinho !== j);
 					}
 					else {
-						carrinho = state.carrinho.map((item,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do item atualizada
-							if (j === index){
+						carrinho = state.carrinho.map((produto,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do item atualizada
+							if (j === indice_do_produto_no_carrinho){
 							
-								return {"item" : parseInt(idP), "qtd" : qtd-1, "preco" : parseFloat(preco), "name" : name}; 
+								return {"item" : parseInt(id_produto), "qtd" : qtd-1, "preco" : parseFloat(preco), "name" : name}; 
 				
 							} else {
 
-								return item;
+								return produto;
 							}
 						});
 					}
-					/*const users = state.users.map((user, j) => { // atualiza o vetor de users
-						if (user === j){ 
-							user.carrinho = carrinho
-						}
-						return user
-					})*/
 
-					return { // coloca o vetor de users atualizado no state
+					return { // atribui o carrinho atualizado ao state
 						carrinho,
 					}		
 				});	
@@ -161,38 +119,33 @@ class App extends React.Component {
 		e.preventDefault();
 
 		const carrinho = []
-		const userId = 0
 
-		console.log(this.state.carrinho)
+		this.setState( state => { //atribui um vetor vazio ao carrinho para esvaziá-lo
 
-		this.setState( state => {
-
-			console.log(carrinho)
 			return{
 				carrinho,
 			}
 			
 		})
+
+		alert("A compra foi finalizada!")
 	}
 
-	//Função que calcula o preço total
-	calcular(){ // ADICIONAR O PARÂMETRO USER
+	//Função que calcula o preço total do pedido
+	calcular_preco_total(){ 
 
-	//	e.preventDefault();
-
-		var soma = 0;
-		console.log(this.state.carrinho)
+		var preco_total_da_compra = 0;
 
 		if (this.state.carrinho.length !== 0){
-			soma = this.state.carrinho.map( function(a) { // percorre o vetor carrinho retornando o preço da soma de itens de cada tipo e acrescenta à soma total
-				return a.preco*a.qtd 
+			preco_total_da_compra = this.state.carrinho.map( function(produto) { // percorre o vetor carrinho retornando o preço da soma de itens de cada tipo e acrescenta à soma total
+				return produto.preco*produto.qtd 
 
-				}).reduce(function(soma, produto) { 
-			 		return soma + produto 
+				}).reduce(function(preco_total_da_compra, preco_total_do_produto) { 
+			 		return preco_total_da_compra + preco_total_do_produto 
 			 	});
 
 			return ( 
-				<label> Preço Total: $ {soma} </label> 
+				<label> Preço Total: $ {preco_total_da_compra} </label> 
 			);	
 		}
 		else{
@@ -245,20 +198,17 @@ class App extends React.Component {
 				<Route 
 					path="/carrinho" 
 					component={() => <TelaCarrinho 
-						//users={this.state.users}
 						carrinho={this.state.carrinho}
+						adicionarCarrinho={this.adicionarCarrinho}
+						diminuirCarrinho={this.diminuirCarrinho}
 					/>}
 				/>
 
 				<Route 
 					path="/pedido" 
 					component={() => <TelaPedido
-						//users={this.state.users}
-						calcular={this.calcular}
-						//index={0}
-						//qtd={0}
-						carrinho={this.state.carrinho}
-						esvaziarCarrinho={this.esvaziarCarrinho}
+						calcular_preco_total={this.calcular_preco_total} // preço total será calculado na tela de pedidos
+						esvaziarCarrinho={this.esvaziarCarrinho} // carrinho será esvaziado na tela de pedidos
 					/>}
 				/>
 			
