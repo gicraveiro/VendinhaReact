@@ -1,3 +1,8 @@
+O arquivo index.js contém o roteador de páginas e o id="root" procurado pelo /public/index.html para rodar a aplicação
+O endereço "/" renderiza a TelaInicial.js
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
