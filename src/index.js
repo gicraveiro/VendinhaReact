@@ -8,8 +8,12 @@ import TelaCarrinho from './Carrinho.js'
 import TelaPedido from './Pedido.js'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 
+// Arquivo de index
+// contém o global state com credenciais dos usuários e um carrinho de compras, funções de aumentar, diminuir a qtd de itens no carrinho,
+//  esvaziar carrinho e calcular preço total
 // indica qual componente de tela deve ser renderizado, de acordo com o path
 // inicialmente indica o componente App
+
 
 class App extends React.Component {
 
@@ -35,7 +39,7 @@ class App extends React.Component {
 	//Função para adicionar uma unidade de um produto no carrinho
 	adicionarCarrinho(id_produto, preco_produto, name_produto) {
 
-		var indice_produto_carrinho = this.state.carrinho.map(function(produto) { // indice do produto dentro do carrinho
+		var indice_produto_carrinho = this.state.carrinho.map(function(produto) { 
 					 							return produto.item_id.toString();
 					 						}).indexOf(id_produto) // encontra o índice do carrinho que contém o produto que deve ser adicionado
 
@@ -51,14 +55,14 @@ class App extends React.Component {
 
 				qtd_produto_carrinho = this.state.carrinho[indice_produto_carrinho].qtd // qtd do produto no carrinho atualmente
 
-				carrinho = state.carrinho.map((item_id,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do produto atualizada
+				carrinho = state.carrinho.map((produto,j) => { // cria uma cópia do vetor de carrinho, mas com a quantidade do produto atualizada
 					if (j === indice_produto_carrinho){
 					
 						return {"item_id" : parseInt(id_produto), "qtd" : qtd_produto_carrinho+1, "preco" : parseFloat(preco_produto), "name" : name_produto}; 
 		
 					} else {
 
-						return item_id;
+						return produto; // não modifica os outros produtos do carrinho
 					}
 				});
 			}
@@ -97,7 +101,7 @@ class App extends React.Component {
 				
 							} else {
 
-								return produto;
+								return produto; // não modifica os outros produtos do carrinho
 							}
 						});
 					}
@@ -110,7 +114,7 @@ class App extends React.Component {
 		} 
 	}
 
-	// Função que esvazia o carrinho,
+	// Função que esvazia o carrinho
 	esvaziarCarrinho(event) {
 
 		event.preventDefault();
@@ -181,7 +185,7 @@ class App extends React.Component {
 				<Route 
 					path="/produtos" 
 					component={() => <TelaProdutos
-										user={this.state.users[0]} // só para passar o nome do usuário 
+										user={this.state.users[0]} // só para passar o nome do usuário, mudar o índice para diferentes usuários
 										carrinho={this.state.carrinho}
 										adicionarCarrinho={this.adicionarCarrinho}
 										diminuirCarrinho={this.diminuirCarrinho}

@@ -39,7 +39,7 @@ class TelaCadastro extends React.Component {
 
 		var validar_email = require("email-validator")
 
-		// se algum dado é inválido ou nulo, validação de cpf e email importada
+		// se algum dado é inválido ou nulo  (validação de cpf e email importada)
 		if( !CPF.validate(this.state.cpf.toString()) || this.state.nome === '' || this.state.senha === '' || 
 		 this.state.data_nascimento === '' || !validar_email.validate(this.state.email)){
 		

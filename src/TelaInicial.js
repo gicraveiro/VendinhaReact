@@ -12,13 +12,13 @@ class TelaInicial extends React.Component { // Tela inicial
 		};
 	}
 	
-	chamaLogin = () => { // indica a tela de login como página que deve ser renderizada
+	redireciona_tela_login = () => { // indica a tela de login como página que deve ser renderizada
 		this.setState({
 			pagina: "tela_login",
 		});
 	}
 	
-	chamaCadastro = () => { // indica a tela de cadastro como página que deve ser renderizada
+	redireciona_tela_cadastro = () => { // indica a tela de cadastro como página que deve ser renderizada
 		this.setState({
 			pagina: "tela_cadastro",
 		});
@@ -46,9 +46,9 @@ class TelaInicial extends React.Component { // Tela inicial
 						</p>
 					</header>
 
-					<button type="button" className="btn btn-info" onClick={this.chamaLogin} >Login</button> 
+					<button name="botao_login" type="button" className="btn btn-info" onClick={this.redireciona_tela_login} >Login</button> 
 					
-					<button type="button" className="btn btn-info" onClick={this.chamaCadastro} >Cadastrar-se</button> 
+					<button name="botao_cadastro" type="button" className="btn btn-info" onClick={this.redireciona_tela_cadastro} >Cadastrar-se</button> 
 				
 				</div>
 			);

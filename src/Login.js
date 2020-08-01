@@ -46,7 +46,7 @@ class Login extends React.Component { //Tela de login
 	}
 
 		render () { 
-			// caso a página que deva ser renderizada seja a de login, redireciona para a página de login
+			// redireciona para tela de produtos
 			if(this.state.pagina === "tela_produtos" ) { 
 				return <Redirect to ="/produtos" />
 			}

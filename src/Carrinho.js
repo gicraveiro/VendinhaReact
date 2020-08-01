@@ -2,7 +2,7 @@ import React from 'react';
 import { Redirect } from 'react-router'
 
 // Tela do carrinho de compras 
-// inclui todos os minicards correspondentes a cada produto se tiver produtos no carrinho, 
+// inclui todos os minicards correspondentes a cada produto dentro do carrinho, 
 // escolha da forma de pagamento e botão de finalização da compra
 
 // Layout do minicard para cada produto no carrinho

@@ -14,7 +14,7 @@ class CardProduto extends React.Component {
 		var qtd_produtoX_carrinho = 0
 
 		if (indice_no_carrinho !== -1) {
-			qtd_produtoX_carrinho = this.props.carrinho[indice_no_carrinho].qtd // atribui a quantidade de unidades daquele item está no carrinho
+			qtd_produtoX_carrinho = this.props.carrinho[indice_no_carrinho].qtd // atribui a quantidade de unidades daquele item que está no carrinho
 		}
 
 		return (
@@ -50,12 +50,12 @@ class CardProduto extends React.Component {
 function Lista_Produtos_Disponiveis(props) { 
 
 	// retorna um card de produto que exibe suas informações relevantes para o usuário para cada produto disponível
-	const Lista_Produtos_Disponiveis = props.produtos.map((produtos) =>
-		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} user={props.user} carrinho={props.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
+	const lista_produtos_disponiveis = props.produtos.map((produtos) =>
+		<CardProduto key={produtos.id.toString()} name={produtos.name} price={produtos.price} image={produtos.image} id={produtos.id} carrinho={props.carrinho} adicionarCarrinho={props.adicionarCarrinho} diminuirCarrinho={props.diminuirCarrinho}/>
 	);
 
 	return (
-		<ul className="row">{Lista_Produtos_Disponiveis}</ul>
+		<ul className="row">{lista_produtos_disponiveis}</ul>
 	);
 
 }
@@ -71,11 +71,11 @@ class TelaProdutos extends React.Component {
 			produtos: null, // vetor que receberá os produtos
 			pagina: "tela_produtos" // página que deve ser renderizada
 		};
-		this.chamaCarrinho = this.chamaCarrinho.bind(this);
+		this.redireciona_tela_carrinho = this.redireciona_tela_carrinho.bind(this);
 
 	}
 
-	chamaCarrinho() { // indica a tela de produtos como página que deve ser renderizada
+	redireciona_tela_carrinho() { // indica a tela de produtos como página que deve ser renderizada
 		this.setState({
 			pagina: "tela_carrinho"
 		});
@@ -102,7 +102,7 @@ class TelaProdutos extends React.Component {
 				<div name="tela_produtos">
 					<p name="mensagem_boas_vindas"> Bem-vinda {this.props.user.nome}</p>
 
-					<button name="botao_ir_carrinho" type="button" className="btn btn-info" onClick={this.chamaCarrinho}> Ver carrinho de compras </button>
+					<button name="botao_ir_carrinho" type="button" className="btn btn-info" onClick={this.redireciona_tela_carrinho}> Ver carrinho de compras </button>
 
 					<h2 name="titulo_pagina"> Produtinhos disponíveis </h2>
 					
@@ -112,7 +112,12 @@ class TelaProdutos extends React.Component {
 						
 						<div name="lista_produtos">
 							
-							<Lista_Produtos_Disponiveis produtos={this.state.produtos}  carrinho={this.props.carrinho} adicionarCarrinho={this.props.adicionarCarrinho} diminuirCarrinho={this.props.diminuirCarrinho}/>
+							<Lista_Produtos_Disponiveis 
+								produtos={this.state.produtos} 
+								carrinho={this.props.carrinho} 
+								adicionarCarrinho={this.props.adicionarCarrinho} 
+								diminuirCarrinho={this.props.diminuirCarrinho}
+							/>
 
 						</div>
 					)}
